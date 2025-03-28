@@ -1,7 +1,14 @@
 
-[![Crates.io](https://img.shields.io/crates/v/cronus_cli)](https://crates.io/crates/cronus_cli)
+[![Crates.io](https://img.shields.io/crates/v/serde-doc)](https://crates.io/crates/serde-doc)
 
-Cronus aims to help you focusing on **business logic code only** instead of the other **glue code**.
+serde-doc is an tool that generates documentations for the serde structures in your source code  without modifying any source code.
+
+## Features
+- Markdown (WIP)
+Direct human readable markdown document for the serde structures
+
+- JSON Schema (WIP)
+JSON Schema gives you more flexibilities to use other document generators.
 
 
 ## Usage
