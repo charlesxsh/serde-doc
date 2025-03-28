@@ -20,3 +20,8 @@ Options:
   -h, --help                           Print help
   -V, --version                        Print version
 ```
+
+## Dev
+```
+cargo install --path .
+```

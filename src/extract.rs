@@ -14,7 +14,10 @@ pub fn process_path<S: AsRef<Path>>(context: &mut Context, p: S) -> Result<()> {
     } else if path.is_dir() {
         for entry in std::fs::read_dir(path)? {
             let entry = entry?;
-            if entry.path().is_file() {
+            let entry_path = entry.path();
+            if entry_path.is_file() {
+                process_path(context, entry.path())?;
+            } else if entry_path.is_dir() {
                 process_path(context, entry.path())?;
             }
         }

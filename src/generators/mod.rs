@@ -5,7 +5,10 @@ use anyhow::{bail, Result};
 use crate::Context;
 
 pub struct GeneratorConfig {
-    pub output: String,
+    pub output: Option<String>,
+    pub structs: Option<Vec<String>>,
+    pub files: Option<Vec<String>>,
+
 }
 pub trait Generator {
     fn generate(&self, ctx: &Context, config:&GeneratorConfig) -> Result<()>;

@@ -30,17 +30,38 @@ enum Commands {
         generator: String,
         /// Destination path for the generated files
         #[arg(short, long)]
-        output: String,
+        output: Option<String>,
+
+        /// List of structs to generate
+        /// If not provided, all structs will be generated
+        #[arg(short, long)]
+        structs: Option<Vec<String>>,
+
+        /// List of files to be included
+        /// If not provided, all files will be included
+        #[arg(short, long)]
+        files: Option<Vec<String>>,
     },
+
 }
+
+
 fn main() -> Result<()> {
-    let cli = Cli::parse();
+    let mut args = std::env::args().collect::<Vec<_>>();
+
+    // This handles running as `cargo serde-doc ...`
+    if args.get(1).map(String::as_str) == Some("serde-doc") {
+        args.remove(1); // Remove the subcommand part
+    }
+
+    let cli = Cli::parse_from(args);
+
 
     match &cli.command {
         Commands::List => {
             handle_list(cli)
         }
-        Commands::Gen { generator: _, output: _ } => {
+        Commands::Gen { generator: _, output: _, files:_, structs:_ } => {
             handle_gen(cli)
         }
     }
@@ -64,11 +85,13 @@ fn handle_gen(args: Cli) -> Result<()> {
     let mut ctx = serde_doc::Context::new();
     serde_doc::extract::process_path(&mut ctx, args.manifest_path)?;
     match args.command {
-        Commands::Gen { generator, output } => {
+        Commands::Gen { generator, output, files, structs } => {
             let generator = get_generator(&generator)?;
 
             let config = serde_doc::generators::GeneratorConfig {
                 output,
+                structs,
+                files
             };
 
             generator.generate(&ctx, &config)?;
