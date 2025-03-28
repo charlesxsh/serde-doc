@@ -2,6 +2,8 @@
 name = "serde-doc"
 version = "0.1.0"
 edition = "2021"
+description = "A tool to generate documentation for Serde serialization and deserialization."
+license = "MIT OR Apache-2.0"
 
 [[bin]]
 name = "cargo-serde-doc"
